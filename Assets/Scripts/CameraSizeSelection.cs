@@ -22,13 +22,15 @@ public class CameraSizeSelection : MonoBehaviour
     private float CameraAspect;
 
     private EnemySpawnManager _enemyManager;
+    private GameObjectsPool _enemyPool;
 
     private void Awake()
     {
         _enemyManager = EnemySpawnManager.Instance;
+        _enemyPool = GameObjectsPoolsManager.Instance.GetPool("Enemy");
 
         CameraAspect = MainCamera.aspect;
-        
+
         if (CameraAspect > 1)
             CameraAspect = 1 / CameraAspect;
     }
@@ -45,7 +47,7 @@ public class CameraSizeSelection : MonoBehaviour
 
     private void FixedUpdate()
     {
-        var futher = _enemyManager.EnemyPool
+        var futher = _enemyPool.Items
             .Where(FindCriterea)
             .OrderByDescending(OrderCriterea)
             .FirstOrDefault();

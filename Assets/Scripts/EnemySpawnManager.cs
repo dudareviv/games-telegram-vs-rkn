@@ -1,14 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemySpawnManager : Singleton<EnemySpawnManager>
 {
     public Transform PlayerTransform;
 
-    public GameObject EnemyPrefab;
-
-    public List<GameObject> EnemyPool;
     public int EnemyPoolLimit = 15;
 
     public float SpawnRadiusMin = 3f;
@@ -40,38 +38,7 @@ public class EnemySpawnManager : Singleton<EnemySpawnManager>
             var position = (Vector2) PlayerTransform.position;
             position = position + direction.normalized * Random.Range(SpawnRadiusMin, SpawnRadiusMax);
 
-            InstantiateEnemy(position);
+            GameObjectsPoolsManager.Instance.Spawn("Enemy", position, EnemyPoolLimit);
         }
     }
-
-    private static bool IsEnemyFree(GameObject enemy)
-    {
-        return !enemy.activeInHierarchy;
-    }
-
-    private void InstantiateEnemy(Vector2 position)
-    {
-        var enemy = EnemyPool.Find(IsEnemyFree);
-
-        if (enemy) {
-            enemy.transform.position = position;
-            enemy.SetActive(true);
-        } else if (EnemyPool.Count < EnemyPoolLimit) {
-            enemy = Instantiate(EnemyPrefab, position, Quaternion.identity);
-            EnemyPool.Add(enemy);
-        }
-    }
-
-    public static void DestroyEnemy(GameObject enemy)
-    {
-        enemy.SetActive(false);
-    }
-
-    public void Reset()
-    {
-        foreach (var enemy in EnemyPool) {
-            DestroyEnemy(enemy);
-        }
-    }
-
 }

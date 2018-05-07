@@ -11,8 +11,8 @@ public class PlayerCollideHandler : MonoBehaviour
         if (other.CompareTag("Enemy")) {
             OnEnemyHit.Invoke();
 
-            EnemySpawnManager.DestroyEnemy(other.gameObject);
-            ExplosionsSpawnManager.Instance.Spawn(other.gameObject.transform.position);
+            GameObjectsPoolsManager.Instance.DestroyItem("Enemy", other.gameObject);
+            GameObjectsPoolsManager.Instance.Spawn("FireExplosion", other.transform.position);
 
             HealthManager.Instance.GetDamage(1);
         }
@@ -21,7 +21,7 @@ public class PlayerCollideHandler : MonoBehaviour
             OnCoinHit.Invoke();
 
             ScoreManager.Instance.CollectCoin();
-            CoinSpawnManager.DestroyCoin(other.gameObject);
+            GameObjectsPoolsManager.Instance.DestroyItem("Coin", other.gameObject);
         }
     }
 

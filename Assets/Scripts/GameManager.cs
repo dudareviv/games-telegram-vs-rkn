@@ -27,8 +27,6 @@ public class GameManager : Singleton<GameManager>
         Player.transform.rotation = Quaternion.identity;
         HealthManager.Instance.Reset();
         ScoreManager.Instance.Reset();
-        CoinSpawnManager.Instance.Reset();
-        EnemySpawnManager.Instance.Reset();
-        ExplosionsSpawnManager.Instance.Reset();
+        GameObjectsPoolsManager.Instance.Reset();
     }
 }
