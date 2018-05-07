@@ -19,11 +19,18 @@ public class CameraSizeSelection : MonoBehaviour
     [SerializeField]
     private float TargetSize;
 
+    private float CameraAspect;
+
     private EnemySpawnManager _enemyManager;
 
     private void Awake()
     {
         _enemyManager = EnemySpawnManager.Instance;
+
+        CameraAspect = MainCamera.aspect;
+        
+        if (CameraAspect > 1)
+            CameraAspect = 1 / CameraAspect;
     }
 
     private bool FindCriterea(GameObject x)
@@ -46,10 +53,11 @@ public class CameraSizeSelection : MonoBehaviour
         if (futher == null)
             return;
 
-        var radius = Vector2.Distance(CameraContainerTransform.position, futher.transform.position) + FurtherObjectRadius;
+        var radius = Vector2.Distance(CameraContainerTransform.position, futher.transform.position) +
+                     FurtherObjectRadius;
         radius = Mathf.Clamp(radius, RadiusMin, RadiusMax);
 
-        TargetSize = radius / MainCamera.aspect;
+        TargetSize = radius / CameraAspect;
     }
 
     private void Update()
