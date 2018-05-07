@@ -11,6 +11,9 @@ public class PlayerCollideHandler : MonoBehaviour
         if (other.CompareTag("Enemy")) {
             OnEnemyHit.Invoke();
 
+            EnemySpawnManager.DestroyEnemy(other.gameObject);
+            ExplosionsSpawnManager.Instance.Spawn(other.gameObject.transform.position);
+
             HealthManager.Instance.GetDamage(1);
         }
 

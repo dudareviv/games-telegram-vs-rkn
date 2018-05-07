@@ -2,28 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CameraShakeTest : MonoBehaviour
+public class ShakerTest : MonoBehaviour
 {
-    private CameraTargetFollow _cameraTargetFollow;
+    private Shaker _shaker;
 
     private void Awake()
     {
-        _cameraTargetFollow = GetComponent<CameraTargetFollow>();
+        _shaker = GetComponent<Shaker>();
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Q)) {
-            _cameraTargetFollow.AddTrauma(0.1f);
+            _shaker.AddTrauma(0.1f);
         }
         if (Input.GetKeyDown(KeyCode.W)) {
-            _cameraTargetFollow.AddTrauma(0.3f);
+            _shaker.AddTrauma(0.3f);
         }
         if (Input.GetKeyDown(KeyCode.E)) {
-            _cameraTargetFollow.AddTrauma(0.5f);
+            _shaker.AddTrauma(0.5f);
         }
         if (Input.GetKeyDown(KeyCode.R)) {
-            _cameraTargetFollow.AddTrauma(1f);
+            _shaker.AddTrauma(1f);
         }
     }
 
