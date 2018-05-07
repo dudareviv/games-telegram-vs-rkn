@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class CameraSizeSelection : MonoBehaviour
 {
-    public Camera TargetCamera;
-    public Transform TargetTransform;
+    public Camera MainCamera;
+    public Transform CameraContainerTransform;
+    public Transform PlayerTransform;
 
     [Range(0.01f, 1f)]
     public float Speed = .5f;
@@ -32,7 +33,7 @@ public class CameraSizeSelection : MonoBehaviour
 
     private float OrderCriterea(GameObject x)
     {
-        return Vector2.Distance(TargetTransform.position, x.transform.position);
+        return Vector2.Distance(CameraContainerTransform.position, x.transform.position);
     }
 
     private void FixedUpdate()
@@ -45,14 +46,14 @@ public class CameraSizeSelection : MonoBehaviour
         if (futher == null)
             return;
 
-        var radius = Vector2.Distance(TargetTransform.position, futher.transform.position) + FurtherObjectRadius;
+        var radius = Vector2.Distance(CameraContainerTransform.position, futher.transform.position) + FurtherObjectRadius;
         radius = Mathf.Clamp(radius, RadiusMin, RadiusMax);
 
-        TargetSize = radius / TargetCamera.aspect;
+        TargetSize = radius / MainCamera.aspect;
     }
 
     private void Update()
     {
-        TargetCamera.orthographicSize = Mathf.Lerp(TargetCamera.orthographicSize, TargetSize, Speed);
+        MainCamera.orthographicSize = Mathf.Lerp(MainCamera.orthographicSize, TargetSize, Speed);
     }
 }

@@ -1254,7 +1254,7 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1481773034}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 2, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1690171519}
@@ -1272,8 +1272,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 350d6f07ef840d74b95b83c86cf0701b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Target: {fileID: 1125254017}
+  CameraContainerTransform: {fileID: 1481773035}
+  PlayerTransform: {fileID: 1125254017}
   Offset: {x: 0, y: 0, z: -10}
+  DirectionDistanceOffset: 2
 --- !u!114 &1481773037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1285,8 +1287,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b1ba86d3affc984b8ea71aad9305751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TargetCamera: {fileID: 1690171518}
-  TargetTransform: {fileID: 1125254017}
+  MainCamera: {fileID: 1690171518}
+  CameraContainerTransform: {fileID: 1481773035}
+  PlayerTransform: {fileID: 1125254017}
   Speed: 0.1
   RadiusMin: 5
   RadiusMax: 8
