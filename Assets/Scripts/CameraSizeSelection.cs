@@ -21,12 +21,10 @@ public class CameraSizeSelection : MonoBehaviour
 
     private float CameraAspect;
 
-    private EnemySpawnManager _enemyManager;
     private GameObjectsPool _enemyPool;
 
     private void Awake()
     {
-        _enemyManager = EnemySpawnManager.Instance;
         _enemyPool = GameObjectsPoolsManager.Instance.GetPool("Enemy");
 
         CameraAspect = MainCamera.aspect;
