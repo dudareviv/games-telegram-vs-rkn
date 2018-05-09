@@ -27,10 +27,22 @@ public class CameraSizeSelection : MonoBehaviour
     {
         _enemyPool = GameObjectsPoolsManager.Instance.GetPool("Enemy");
 
+        InitAspectAndSize();
+    }
+
+    private void OnValidate()
+    {
+        InitAspectAndSize();
+    }
+
+    private void InitAspectAndSize()
+    {
         CameraAspect = MainCamera.aspect;
 
         if (CameraAspect > 1)
             CameraAspect = 1 / CameraAspect;
+
+        TargetSize = RadiusMin / CameraAspect;
     }
 
     private bool FindCriterea(GameObject x)

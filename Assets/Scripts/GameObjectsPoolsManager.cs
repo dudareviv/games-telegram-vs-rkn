@@ -6,7 +6,7 @@ public class GameObjectsPoolsManager : Singleton<GameObjectsPoolsManager>
 {
     public GameObjectsPool[] GameObjectsPools;
 
-    private Dictionary<string, GameObjectsPool> _pools;
+    private Dictionary<string, GameObjectsPool> _pools = new Dictionary<string, GameObjectsPool>();
 
     private void Awake()
     {

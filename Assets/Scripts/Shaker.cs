@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PhoneVibrator;
+using UnityEngine;
 
 public class Shaker : MonoBehaviour
 {
@@ -51,6 +52,9 @@ public class Shaker : MonoBehaviour
                 Trauma = 0;
             else
                 Shake = Trauma * Trauma * Trauma;
+
+            if (Shake >= 0.8f)
+                VibratorController.Instance.Vibrate(Time.fixedDeltaTime);
         }
     }
 
