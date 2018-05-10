@@ -19,6 +19,9 @@ public class Shaker : MonoBehaviour
 
     public int Seed = 0;
 
+    [Range(0.1f, 1f)]
+    public float ShakeVibrationThreshold = 0.2f;
+
     public void AddTrauma(float value)
     {
         Trauma += value;
@@ -53,8 +56,11 @@ public class Shaker : MonoBehaviour
             else
                 Shake = Trauma * Trauma * Trauma;
 
-            if (Shake >= 0.8f)
-                VibratorController.Instance.Vibrate(Time.fixedDeltaTime);
+            if (Shake >= ShakeVibrationThreshold) {
+                var duration = (long) (Time.fixedDeltaTime * 1000);
+                VibratorController.Vibrate(duration);
+//                Handheld.Vibrate();
+            }
         }
     }
 

@@ -14,23 +14,13 @@ namespace PhoneVibrator
         private static volatile VibratorController instance;
         private static object syncRoot = new Object();
 
-        private Vibrator _adapter;
-
-        private VibratorController()
-        {
-
-#if UNITY_EDITOR
-            _adapter = new DummyVibratior();
+#if UNITY_ANDROID
+        private static Vibrator _adapter = new AndroidVibrator();
+#elif UNITY_IOS
+        private static Vibrator _adapter = new iOSVibrator();
 #else
-    #if UNITY_ANDROID
-            _adapter = new AndroidVibrator();
-    #elif UNITY_IOS
-            _adapter = new iOSVibrator();
-    #else
-            _adapter = new DummyVibratior();
-    #endif
+        private static Vibrator _adapter = new DummyVibratior();
 #endif
-        }
 
         public static VibratorController Instance {
             get
@@ -51,7 +41,7 @@ namespace PhoneVibrator
 
         #region Vibrator controller implementation
 
-        public void Vibrate(float duration)
+        public static void Vibrate(long duration)
         {
             if (!HasVibrator())
                 return;
@@ -59,20 +49,20 @@ namespace PhoneVibrator
             _adapter.Vibrate(duration);
         }
 
-        public void Vibrate(long[] patter, int repeat)
-        {
-            if (!HasVibrator())
-                return;
+//        public static void Vibrate(long[] patter, int repeat)
+//        {
+//            if (!HasVibrator())
+//                return;
+//
+//            _adapter.Vibrate(patter, repeat);
+//        }
 
-            _adapter.Vibrate(patter, repeat);
-        }
-
-        public bool HasVibrator()
+        public static bool HasVibrator()
         {
             return _adapter.HasVibrator();
         }
 
-        public void Cancel()
+        public static void Cancel()
         {
             if (HasVibrator())
                 return;
