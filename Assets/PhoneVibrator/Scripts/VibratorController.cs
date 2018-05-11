@@ -14,9 +14,9 @@ namespace PhoneVibrator
         private static volatile VibratorController instance;
         private static object syncRoot = new Object();
 
-#if UNITY_ANDROID
+#if UNITY_ANDROID && !UNITY_EDITOR
         private static Vibrator _adapter = new AndroidVibrator();
-#elif UNITY_IOS
+#elif UNITY_IOS && !UNITY_EDITOR
         private static Vibrator _adapter = new iOSVibrator();
 #else
         private static Vibrator _adapter = new DummyVibratior();

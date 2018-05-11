@@ -38,6 +38,7 @@ public class EnemySpawnManager : Singleton<EnemySpawnManager>
             var position = (Vector2) PlayerTransform.position;
             position = position + direction.normalized * Random.Range(SpawnRadiusMin, SpawnRadiusMax);
 
+            GameObjectsPoolsManager.Instance.Spawn("FX_EnemySpawn", position);
             GameObjectsPoolsManager.Instance.Spawn("Enemy", position, EnemyPoolLimit);
         }
     }

@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 82255986534484194}
   - component: {fileID: 114017762468216126}
   m_Layer: 0
-  m_Name: Fire_Explosion
+  m_Name: CFX_FireExplosion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

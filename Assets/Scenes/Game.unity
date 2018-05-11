@@ -1266,7 +1266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameObjectsPools:
-  - Name: FireExplosion
+  - Name: FX_FireExplosion
     ItemPrefab: {fileID: 1590267428933622, guid: a83b0752f109919449ea0e9bdd9e70fa,
       type: 2}
     Items: []
@@ -1293,6 +1293,20 @@ MonoBehaviour:
         Culture=neutral, PublicKeyToken=null
   - Name: Enemy
     ItemPrefab: {fileID: 1535399773568608, guid: 10dfe35cbf412274aae999fe058e5bb0,
+      type: 2}
+    Items: []
+    OnSpawnEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+    OnDesctroyEvent:
+      m_PersistentCalls:
+        m_Calls: []
+      m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+        Culture=neutral, PublicKeyToken=null
+  - Name: FX_EnemySpawn
+    ItemPrefab: {fileID: 1481944149375496, guid: 6cf2b80283b204149b6b38f408b6ae1f,
       type: 2}
     Items: []
     OnSpawnEvent:
@@ -1685,6 +1699,7 @@ MonoBehaviour:
   Trauma: 0
   Shake: 0
   Seed: 0
+  ShakeVibrationThreshold: 0.2
 --- !u!1 &1766435818
 GameObject:
   m_ObjectHideFlags: 0

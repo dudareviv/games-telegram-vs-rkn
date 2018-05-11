@@ -12,7 +12,7 @@ public class PlayerCollideHandler : MonoBehaviour
             OnEnemyHit.Invoke();
 
             GameObjectsPoolsManager.Instance.DestroyItem("Enemy", other.gameObject);
-            GameObjectsPoolsManager.Instance.Spawn("FireExplosion", other.transform.position);
+            GameObjectsPoolsManager.Instance.Spawn("FX_FireExplosion", other.transform.position);
 
             HealthManager.Instance.GetDamage(1);
         }

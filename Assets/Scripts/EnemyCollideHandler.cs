@@ -6,7 +6,7 @@ public class EnemyCollideHandler : MonoBehaviour
     {
         if (other.CompareTag("Enemy")) {
             GameObjectsPoolsManager.Instance.DestroyItem("Enemy", gameObject);
-            GameObjectsPoolsManager.Instance.Spawn("FireExplosion", transform.position);
+            GameObjectsPoolsManager.Instance.Spawn("FX_FireExplosion", transform.position);
         }
     }
 }
