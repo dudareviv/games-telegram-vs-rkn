@@ -10,8 +10,7 @@ public class PlayerControl : MonoBehaviour
     private Motor _motor;
     private Rotator _rotator;
 
-    private int currentTouchFingerId;
-    private bool isTouching;
+    private List<int> _touches = new List<int>();
 
     [SerializeField]
     private RotateDirection _rotateDirection;
@@ -20,69 +19,67 @@ public class PlayerControl : MonoBehaviour
     {
         _motor = GetComponent<Motor>();
         _rotator = GetComponent<Rotator>();
+        _touches = new List<int>();
     }
 
     private void Update()
     {
+#if (UNITY_ANDROID || UNITY_IOS)
         foreach (var touch in Input.touches) {
-            HandleTouch(touch.fingerId, touch.position, touch.phase);
+            HandleTouch(touch.position, touch.phase);
         }
+#endif
 
+#if (UNITY_EDITOR || UNITY_STANDALONE)
         if (Input.touchCount == 0) {
             if (Input.GetMouseButtonDown(0)) {
-                HandleTouch(10, Input.mousePosition, TouchPhase.Began);
+                HandleTouch(Input.mousePosition, TouchPhase.Began);
             }
             if (Input.GetMouseButton(0)) {
-                HandleTouch(10, Input.mousePosition, TouchPhase.Moved);
+                HandleTouch(Input.mousePosition, TouchPhase.Moved);
             }
             if (Input.GetMouseButtonUp(0)) {
-                HandleTouch(10, Input.mousePosition, TouchPhase.Ended);
+                HandleTouch(Input.mousePosition, TouchPhase.Ended);
             }
         }
+#endif
 
         _motor.Move();
 
-        if (!isTouching) {
-            float axis = Input.GetAxis("Horizontal");
-            if (Math.Abs(axis) > 0.05f) {
-                _rotateDirection = axis > 0 ? RotateDirection.CLOCKWISE : RotateDirection.COUNTER_CLOCKWISE;
-            } else {
-                _rotateDirection = RotateDirection.NONE;
-            }
+#if (UNITY_EDITOR || UNITY_STANDALONE)
+        float axis = Input.GetAxis("Horizontal");
+        if (Math.Abs(axis) > 0.05f) {
+            _rotateDirection = axis > 0 ? RotateDirection.CLOCKWISE : RotateDirection.COUNTER_CLOCKWISE;
+        } else {
+            _rotateDirection = RotateDirection.NONE;
         }
+#endif
 
         _rotator.Rotate(_rotateDirection);
     }
 
-    private void HandleTouch(int touchFingerId, Vector3 touchPosition, TouchPhase touchPhase)
+    private void HandleTouch(Vector3 touchPosition, TouchPhase touchPhase)
     {
-        if (isTouching && touchFingerId != currentTouchFingerId)
-            return;
-
-        touchPosition = Camera.main.ScreenToViewportPoint(touchPosition);
+        var screenTouchPosition = Camera.main.ScreenToViewportPoint(touchPosition);
 
         switch (touchPhase) {
-            case TouchPhase.Ended:
-            case TouchPhase.Canceled:
-                _rotateDirection = RotateDirection.NONE;
-                isTouching = false;
-                break;
 
             case TouchPhase.Began:
-                currentTouchFingerId = touchFingerId;
-                _rotateDirection = touchPosition.x > 0.5f
+                _rotateDirection = screenTouchPosition.x > 0.5f
                     ? RotateDirection.CLOCKWISE
                     : RotateDirection.COUNTER_CLOCKWISE;
-                isTouching = true;
                 break;
 
             case TouchPhase.Moved:
-                _rotateDirection = touchPosition.x > 0.5f
+            case TouchPhase.Stationary:
+                _rotateDirection = screenTouchPosition.x > 0.5f
                     ? RotateDirection.CLOCKWISE
                     : RotateDirection.COUNTER_CLOCKWISE;
                 break;
 
-            case TouchPhase.Stationary:
+            case TouchPhase.Ended:
+            case TouchPhase.Canceled:
+                _rotateDirection = RotateDirection.NONE;
                 break;
 
             default:
